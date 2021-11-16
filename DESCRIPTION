@@ -1,8 +1,7 @@
 Package: file2meco
 Type: Package
-Title: Transform Files to the 'microtable' Object with 'microeco'
-        Package
-Version: 0.1.0
+Title: Transform Files to 'microtable' Object with 'microeco' Package
+Version: 0.2.0
 Authors@R: c(person("Chi", "Liu", role = c("aut", "cre"), email = "liuchi0426@126.com"))
 Author: Chi Liu [aut, cre]
 Maintainer: Chi Liu <liuchi0426@126.com>
@@ -13,7 +12,7 @@ Suggests: Biostrings, seqinr, phyloseq
 License: GPL-3
 Encoding: UTF-8
 NeedsCompilation: no
-Packaged: 2021-09-07 13:19:03 UTC; Chi
+Packaged: 2021-11-15 14:32:57 UTC; Chi
 Repository: CRAN
-Date/Publication: 2021-09-09 09:00:08 UTC
+Date/Publication: 2021-11-16 05:40:07 UTC
 RoxygenNote: 7.1.1

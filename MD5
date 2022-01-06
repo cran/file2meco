@@ -1,4 +1,4 @@
-a48abae98cef934d5c38cc95b38c8278 *DESCRIPTION
+b2a9e4a20ae465d23ed746812e9eb9c9 *DESCRIPTION
 78ccccd89867712d0988b2f55dd74730 *NAMESPACE
 773498672a0c004601a1cd6c47a42526 *R/data.R
 701a052e7cff6723edc4ee2dd43a2fd4 *R/humann2meco.R
@@ -6,7 +6,7 @@ a48abae98cef934d5c38cc95b38c8278 *DESCRIPTION
 b2552f3315805f94270ae577907df373 *R/mpa2meco.R
 d7e3fe90a7e5410782f31671d8f0f64d *R/ncyc2meco.R
 113e2c51153a236ce8c0b6815f3acd40 *R/physeq2meco.R
-84c216a4120024ef73f5a5cfd0a6422c *R/qiime1meco.R
+ba139b13c0ad046629155ccc18e9dfe9 *R/qiime1meco.R
 992d543fcf8dfa90db897a5b61b45cc2 *R/qiime2meco.R
 4aad672f5877acb5acd5ccf3646506c1 *R/utility.R
 34573ba2aeac8189c734da3eb1860a7a *data/CHOCOPhlAn_taxonomy.RData
@@ -22,7 +22,7 @@ d3882853ba6c0533bbf3594f131acd8d *inst/extdata/example_Ncyc_table.tsv
 0f40051d91b15da98b1a159550605a04 *inst/extdata/example_kraken2_merge.txt
 2b2831ba21d27ab0992bc5f42377ce8f *inst/extdata/example_metagenome_match_table.tsv
 3c9ff76ef700066e463b91e52fafbff4 *inst/extdata/example_metagenome_sample_info.tsv
-9e08f59ee64104463172b3317143bfd3 *inst/extdata/otu_table_raw.txt
+88189bc83f55b891ec8264aca7ec8a7a *inst/extdata/otu_table_raw.txt
 d4e976cd8d146e59fb6c1790f6286587 *inst/extdata/qiimer_0.9.4.tar.gz
 4b5b88abfaffe5a467d40444daa4f124 *inst/extdata/rep.fna
 b5e616c1025460a9fed2aa46dd783133 *inst/extdata/rep_phylo.tre
@@ -41,5 +41,5 @@ eb4dfcc315d37db65c967d55d31800f4 *man/mpa2meco.Rd
 88f7967313c39c0f830837afafdd9640 *man/ncyc2meco.Rd
 e99395d514a88c96c9ab5b9ab6e63ed3 *man/ncyc_map.Rd
 2b768bf9da6c7f9605d8da08d2757244 *man/phyloseq2meco.Rd
-9a6660eb5ff9b8381f1d4ef2d3a96e6e *man/qiime1meco.Rd
+4b510a56dddac84bf3553978241e1717 *man/qiime1meco.Rd
 184d62712eb3c75ec8b6beb66a348a0b *man/qiime2meco.Rd

@@ -1,4 +1,4 @@
-3c7f2bba775ccdc6bcfef837ce063da7 *DESCRIPTION
+b93060a55b1208ddc9921a46e8e58f60 *DESCRIPTION
 78ccccd89867712d0988b2f55dd74730 *NAMESPACE
 773498672a0c004601a1cd6c47a42526 *R/data.R
 fa3b6526618e3bf1ee991d7adb171be3 *R/humann2meco.R
@@ -7,16 +7,18 @@ fa3b6526618e3bf1ee991d7adb171be3 *R/humann2meco.R
 e6ae637b941efb26f00b72b35ffa18b3 *R/ncyc2meco.R
 30228b6603500d207d84b3497c2bdaa8 *R/physeq2meco.R
 e70269f54b941af21ff31d49e2160828 *R/qiime1meco.R
-473bb76fe044936ddc91b54181a2a628 *R/qiime2meco.R
-3dec7a876bedab9068b547f0761b2a05 *R/utility.R
+e255cad9d47e24b1ce98a2b5ac534a54 *R/qiime2meco.R
+1dca8e45d8d833f22f823c9cb554f924 *R/utility.R
 34573ba2aeac8189c734da3eb1860a7a *data/CHOCOPhlAn_taxonomy.RData
-1ff192233df00cd173fe7aed47a6a656 *data/MetaCyc_pathway_map.RData
+64003d4f3cf6240719fa409e2c6bde5c *data/MetaCyc_pathway_map.RData
 903e84d26f65aafae41dbf06ea05bdec *data/ncyc_map.RData
 96cb11292df3d5be81bd44e6130c21fa *inst/CITATION
 b9bc942d95b538d9cafb57959e1a223a *inst/extdata/dada2_table.qza
 ac45ca3fa67af15c871591dcd6a552db *inst/extdata/example_HUMAnN_KEGG_abund.tsv
 8c6b94a2c29f73ad10a783630d9a48f1 *inst/extdata/example_HUMAnN_MetaCyc_abund.tsv
 d3882853ba6c0533bbf3594f131acd8d *inst/extdata/example_Ncyc_table.tsv
+b9123137c1bab9b431152c8a2bcd96e5 *inst/extdata/example_PICRUSt2_KEGG_path_abun_unstrat.tsv
+9c34707d5037f5598fbe3f7250133599 *inst/extdata/example_PICRUSt2_MetaCyc_path_abun_unstrat.tsv
 8c413406e75d0ce2b44203a7b3a63edf *inst/extdata/example_kraken2_merge.txt
 2b2831ba21d27ab0992bc5f42377ce8f *inst/extdata/example_metagenome_match_table.tsv
 3c9ff76ef700066e463b91e52fafbff4 *inst/extdata/example_metagenome_sample_info.tsv
@@ -38,4 +40,4 @@ a0b6d867ca18cde17c9423ec560e97e7 *man/ncyc2meco.Rd
 e99395d514a88c96c9ab5b9ab6e63ed3 *man/ncyc_map.Rd
 e8a5c1e6d1b208521b5c80e03874ccbc *man/phyloseq2meco.Rd
 f1a13139a4d983d6b83053410d8a43c9 *man/qiime1meco.Rd
-ccf3261925d3be7ab90409baadc3520a *man/qiime2meco.Rd
+37b3c3afed20576805edb1522ecac6f2 *man/qiime2meco.Rd

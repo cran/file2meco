@@ -1,9 +1,9 @@
-b93060a55b1208ddc9921a46e8e58f60 *DESCRIPTION
+84f4de32326672653309b23985eee71c *DESCRIPTION
 78ccccd89867712d0988b2f55dd74730 *NAMESPACE
 773498672a0c004601a1cd6c47a42526 *R/data.R
-fa3b6526618e3bf1ee991d7adb171be3 *R/humann2meco.R
+3ca55629b9ca04e9cf006fa0d5384e69 *R/humann2meco.R
 020e8a858faa80669529b1462dd42e32 *R/import.R
-53a2eacea573044bcad2a51d3f8eb901 *R/mpa2meco.R
+6ebbbc0b3d0a9f0e5ac5639b925cb020 *R/mpa2meco.R
 e6ae637b941efb26f00b72b35ffa18b3 *R/ncyc2meco.R
 30228b6603500d207d84b3497c2bdaa8 *R/physeq2meco.R
 e70269f54b941af21ff31d49e2160828 *R/qiime1meco.R
@@ -35,7 +35,7 @@ fd8accf054e534bd771291f001e1ef84 *man/CHOCOPhlAn_taxonomy.Rd
 af885e6e0c5f041a86ba2f65e844f573 *man/humann2meco.Rd
 da57e2c12773d47c4c863dad053a1dde *man/meco2phyloseq.Rd
 2989d1e319c91a22fa32d6b3b961f073 *man/metacyc_pathway_website.Rd
-e41dc07c3dccb82c1cb56e01da065868 *man/mpa2meco.Rd
+55fec846e76f18c8d1bd78e884f0db07 *man/mpa2meco.Rd
 a0b6d867ca18cde17c9423ec560e97e7 *man/ncyc2meco.Rd
 e99395d514a88c96c9ab5b9ab6e63ed3 *man/ncyc_map.Rd
 e8a5c1e6d1b208521b5c80e03874ccbc *man/phyloseq2meco.Rd

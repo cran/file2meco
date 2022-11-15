@@ -5,32 +5,38 @@
 \title{Transform 'QIIME2' results to 'microtable' object.}
 \usage{
 qiime2meco(
-  ASV_data,
-  sample_data = NULL,
-  taxonomy_data = NULL,
+  feature_table,
+  sample_table = NULL,
+  match_table = NULL,
+  taxonomy_table = NULL,
   phylo_tree = NULL,
   rep_fasta = NULL,
   ...
 )
 }
 \arguments{
-\item{ASV_data}{the ASV data, such as the 'data2_table.qza'.}
+\item{feature_table}{the ASV data, such as the \code{'data2_table.qza'}.}
 
-\item{sample_data}{default NULL; the sample metadata table; three formats are available: 
-One format is q2-type tab seperated file path, such as the 'sample-metadata.tsv' in the example;
-The second format is generaly used comma seperated file path with the suffix csv or tab seperated file with suffix tsv/txt;
-The third format is data.frame.}
+\item{sample_table}{default NULL; the sample metadata table; four types of formats are available: 
+1) q2-type tab seperated file of QIIME2, such as the \code{'sample-metadata.tsv'} in the example;
+2) comma seperated file with the suffix csv or tab seperated file with suffix tsv/txt;
+3) Excel type file with the suffix xlsx or xls; require \code{readxl} package to be installed;
+4) \code{data.frame} object from R.}
 
-\item{taxonomy_data}{default NULL; the taxonomy data, such as the 'taxonomy.qza'.}
+\item{match_table}{default NULL; a two column table used to replace the sample names in abundance table; Must be two columns without column names;
+The first column must be raw sample names same with those in feature table, 
+the second column must be new sample names same with the rownames in sample_table; Please also see the example files.}
 
-\item{phylo_tree}{default NULL; the phylogenetic tree, such as the 'tree.qza'.}
+\item{taxonomy_table}{default NULL; the taxonomy data, such as the \code{'taxonomy.qza'}.}
 
-\item{rep_fasta}{default NULL; the representative sequences, such as the 'dada2_rep_set.qza'.}
+\item{phylo_tree}{default NULL; the phylogenetic tree, such as the \code{'tree.qza'}.}
 
-\item{...}{parameter passed to microtable$new function of microeco package, such as auto_tidy parameter.}
+\item{rep_fasta}{default NULL; the representative sequences, such as the \code{'dada2_rep_set.qza'}.}
+
+\item{...}{parameter passed to \code{microtable$new} function of \code{microeco} package, such as \code{auto_tidy} parameter.}
 }
 \value{
-microtable object.
+\code{microtable} object.
 }
 \description{
 Transform 'QIIME2' qza results to microtable object.
@@ -42,9 +48,9 @@ Transform 'QIIME2' qza results to microtable object.
 abund_file_path <- system.file("extdata", "dada2_table.qza", package="file2meco")
 sample_file_path <- system.file("extdata", "sample-metadata.tsv", package="file2meco")
 taxonomy_file_path <- system.file("extdata", "taxonomy.qza", package="file2meco")
-qiime2meco(ASV_data = abund_file_path)
-qiime2meco(ASV_data = abund_file_path, sample_data = sample_file_path)
-qiime2meco(ASV_data = abund_file_path, sample_data = sample_file_path, 
-  taxonomy_data = taxonomy_file_path)
+qiime2meco(abund_file_path)
+qiime2meco(abund_file_path, sample_table = sample_file_path)
+qiime2meco(abund_file_path, sample_table = sample_file_path, 
+  taxonomy_table = taxonomy_file_path)
 }
 }

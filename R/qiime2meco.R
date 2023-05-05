@@ -30,12 +30,13 @@
 #' }
 #' @export
 qiime2meco <- function(feature_table, sample_table = NULL, match_table = NULL, taxonomy_table = NULL, phylo_tree = NULL, rep_fasta = NULL, ...){
-	# if(!require(qiime2R)){
-		# stop("qiime2R package not installed!")
-	# }
 	# Read ASV data
-	feature_table <- as.data.frame(read_qza(feature_table)$data)
-	# first check the match_table
+	if(missing(feature_table)){
+		stop("The feature_table parameter must be provided! Please check the input!")
+	}else{
+		feature_table <- as.data.frame(read_qza(feature_table)$data)
+	}
+	# check the match_table
 	if(!is.null(match_table)){
 		feature_table <- check_match_table(match_table = match_table, abund_new = feature_table)
 	}
@@ -175,9 +176,6 @@ return(artifact)
 # read 'qiime2' biom file (version 2.1)
 #
 # Loads a version 2.1 spec biom file (http://biom-format.org/documentation/format_versions/biom-2.1.html) as expected to be found within a 'qiime2' artifact.
-#
-# file path to the input file, ex: file="~/Downloads/3372d9e0-3f1c-43d8-838b-35c7ad6dac89/data/feature-table.biom"
-
 # return a matrix of values
 read_q2biom <- function(file) {
   if(missing(file)){stop("Path to biom file given")}

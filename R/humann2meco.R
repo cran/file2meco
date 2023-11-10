@@ -3,7 +3,9 @@
 #' @description
 #' Transform 'HUMAnN' metagenomic results to microtable object, reference: Franzosa et al. (2018) <doi:10.1038/s41592-018-0176-y>.
 #' @param feature_table file path of 'HUMAnN' output abundance table; Please see the example.
-#' @param db default "MetaCyc"; either "MetaCyc" or "KEGG"; the pathway database used in the feature_table file generation.
+#' @param db default "MetaCyc"; one of "MetaCyc", "KEGG" or "gene"; "MetaCyc" or "KEGG" means the input feature table is pathway abundance.
+#'   "gene" represents the abundance of genes, such as 'eggNOG', 'KO' and 'EC'. 
+#'   When using "gene", the generated tax_table has only taxonomic lineages and gene name, no higher functional levels.
 #' @param sample_table default NULL; sample metadata table; If provided, must be one of the several types of formats: \cr
 #'   1) comma seperated file with the suffix csv or tab seperated file with suffix tsv or txt; \cr
 #'   2) Excel type file with the suffix xlsx or xls; require \code{readxl} package to be installed; \cr
@@ -46,10 +48,10 @@
 #' test1$plot_bar(facet = "Group", bar_type = "notfull")
 #' # select both function and taxa
 #' test$cal_abund(select_cols = c("Superclass1", "Phylum", "Genus"), rel = TRUE)
-#' test1 <- trans_abund$new(test, taxrank = "Phylum", ntaxa = 10, delete_part_prefix = TRUE)
+#' test1 <- trans_abund$new(test, taxrank = "Phylum", ntaxa = 10, delete_taxonomy_lineage = TRUE)
 #' test1$plot_bar(facet = "Group")
 #' test$taxa_abund$Phylum %<>% .[!grepl("unclass", rownames(.)), ]
-#' test1 <- trans_abund$new(test, taxrank = "Phylum", ntaxa = 10, delete_part_prefix = TRUE)
+#' test1 <- trans_abund$new(test, taxrank = "Phylum", ntaxa = 10, delete_taxonomy_lineage = FALSE)
 #' test1$plot_bar(facet = "Group")
 #' # functional biomarker
 #' test$cal_abund(select_cols = 1:3, rel = TRUE)
@@ -79,7 +81,7 @@
 #' test1$plot_bar(facet = "Group", bar_type = "notfull")
 #' # select both function and taxa
 #' test$cal_abund(select_cols = c("Level.1", "Phylum", "Genus"), rel = TRUE)
-#' test1 <- trans_abund$new(test, taxrank = "Phylum", ntaxa = 10, delete_part_prefix = TRUE)
+#' test1 <- trans_abund$new(test, taxrank = "Phylum", ntaxa = 10, delete_taxonomy_lineage = FALSE)
 #' test1$plot_bar(facet = "Group")
 #' # functional biomarker
 #' test$cal_abund(select_cols = 1:3, rel = TRUE)
@@ -91,7 +93,8 @@
 #' test1$plot_diff_bar(threshold = 2)
 #' }
 #' @export
-humann2meco <- function(feature_table, db = c("MetaCyc", "KEGG")[1], sample_table = NULL, match_table = NULL, ...){
+humann2meco <- function(feature_table, db = c("MetaCyc", "KEGG", "gene")[1], sample_table = NULL, match_table = NULL, ...){
+	db <- match.arg(db, c("MetaCyc", "KEGG", "gene"))
 	# first check func_data file format.
 	abund_raw <- read.delim(feature_table, check.names = FALSE, row.names = 1, stringsAsFactors = FALSE)
 
@@ -111,7 +114,8 @@ humann2meco <- function(feature_table, db = c("MetaCyc", "KEGG")[1], sample_tabl
 				# no taxa mapped, all unclassified!
 				abund_new[filter_num[2], ] <- abund_new[filter_num[1], ]
 			}else{
-				abund_new[filter_num[length(filter_num)], ] <- abund_new[filter_num[1], ] - apply(abund_new[filter_num[2:(length(filter_num) - 1)], ], 2, sum)
+				abund_new[filter_num[length(filter_num)], ] <- abund_new[filter_num[1], ] - 
+					apply(abund_new[filter_num[2:(length(filter_num) - 1)], , drop = FALSE], 2, sum)
 			}
 			remove_number <- c(remove_number, filter_num[1])
 		}
@@ -119,7 +123,7 @@ humann2meco <- function(feature_table, db = c("MetaCyc", "KEGG")[1], sample_tabl
 	
 	# a new abund table with clear name
 	rownames(abund_new) <- abund_rawname
-	abund_new %<>% .[-remove_number, ]
+	abund_new %<>% .[-remove_number, , drop = FALSE]
 	abund_newname <- rownames(abund_new)
 
 	data("CHOCOPhlAn_taxonomy", envir=environment())
@@ -131,7 +135,7 @@ humann2meco <- function(feature_table, db = c("MetaCyc", "KEGG")[1], sample_tabl
 		tidyr::separate(col = "Tax", into = c("Genus", "Species"), sep = "\\.", fill = "right")
 		
 	# get the function and taxonomy lineage
-	if(grepl("MetaCyc", db, ignore.case = TRUE)){
+	if(db == "MetaCyc"){
 		data("MetaCyc_pathway_map", envir=environment())
 		MetaCyc_pathway_map_use <- cbind.data.frame(rowname = rownames(MetaCyc_pathway_map), MetaCyc_pathway_map, stringsAsFactors = FALSE)
 		# delete the descriptions behind the pathway names.
@@ -141,24 +145,24 @@ humann2meco <- function(feature_table, db = c("MetaCyc", "KEGG")[1], sample_tabl
 			dplyr::left_join(., MetaCyc_pathway_map_use, by = c("Func" = "rowname")) %>%
 			dplyr::left_join(., CHOCOPhlAn_taxonomy, by = c("Genus" = "Genus")) %>%
 			.[, c("Superclass1", "Superclass2", "pathway", "Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species")]
-		
-	}else{
-		if(grepl("KEGG", db, ignore.case = TRUE)){
-			data("Tax4Fun2_KEGG", envir=environment(), package = "microeco")
-			ko_mapping_file <- Tax4Fun2_KEGG$ptw_desc
-			ko_mapping_file$pathway <- rownames(ko_mapping_file)
-
-			tax_table <- tax_table %>%
-				dplyr::left_join(., ko_mapping_file, by = c("Func" = "pathway")) %>%
-				dplyr::left_join(., CHOCOPhlAn_taxonomy, by = c("Genus" = "Genus")) %>%
-				.[, c("Level.1", "Level.2", "Level.3", "Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species")]
-
-		}else{
-			stop("Unknown db provided! Must be either MetaCyc or KEGG !")
-		}
 	}
+	if(db == "KEGG"){
+		data("Tax4Fun2_KEGG", envir=environment(), package = "microeco")
+		ko_mapping_file <- Tax4Fun2_KEGG$ptw_desc
+		ko_mapping_file$pathway <- rownames(ko_mapping_file)
 
-	# the CHOCOPhlAn_taxonomy data has been checked manually! If duplicates in results, need carefully checking!
+		tax_table <- tax_table %>%
+			dplyr::left_join(., ko_mapping_file, by = c("Func" = "pathway")) %>%
+			dplyr::left_join(., CHOCOPhlAn_taxonomy, by = c("Genus" = "Genus")) %>%
+			.[, c("Level.1", "Level.2", "Level.3", "Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species")]
+	}
+	if(db == "gene"){
+		tax_table <- tax_table %>%
+			dplyr::left_join(., CHOCOPhlAn_taxonomy, by = c("Genus" = "Genus")) %>%
+			.[, c("Func", "Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species")]
+	}
+	
+	# the CHOCOPhlAn_taxonomy data has been checked manually!
 	if(nrow(tax_table) != length(abund_newname)){
 		stop("Bad taxonomic lineage exists in the dataset! Please contact the maintainer!")
 	}else{

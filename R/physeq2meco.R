@@ -1,42 +1,6 @@
-#' Transform 'microtable' object of 'microeco' package to the 'phyloseq' object of 'phyloseq' package.
-#'
-#' @param dataset a microtable object.
-#' @return phyloseq object.
-#' @examples
-#' \dontrun{
-#' library(microeco)
-#' data("dataset")
-#' meco2phyloseq(dataset)
-#' }
-#' @export
-meco2phyloseq <- function(dataset){
-	otu_table_trans <- dataset$otu_table
-	sample_table_trans <- dataset$sample_table
-	tax_table_trans <- dataset$tax_table
-	phylo_tree_trans <- dataset$phylo_tree
-	seq_trans <- dataset$rep_fasta
-	if(!is.null(seq_trans)){
-		if(!inherits(seq_trans, "DNAStringSet")){
-			message("Skip rep_fasta conversion as it is not DNAStringSet class!")
-			seq_trans <- NULL
-		}
-	}
-	# OTU table for phyloseq
-	otu_table_trans <- phyloseq::otu_table(otu_table_trans, taxa_are_rows = TRUE)
-	sampledata <- phyloseq::sample_data(sample_table_trans)
-	rownames(sampledata) <- rownames(sample_table_trans)
-	# Taxonomic table for phyloseq
-	if(!is.null(tax_table_trans)){
-		tax_table_trans <- phyloseq::tax_table(as.matrix(tax_table_trans))
-	}
-	physeq <- phyloseq::phyloseq(otu_table_trans, tax_table_trans, sampledata, phylo_tree_trans, seq_trans)
-	physeq
-}
-
-
 #' Transform the 'phyloseq' object of 'phyloseq' package to 'microtable' object of 'microeco' package.
 #'
-#' @param physeq a phyloseq object.
+#' @param physeq a phyloseq object <doi:10.1371/journal.pone.0061217>.
 #' @param ... parameter passed to microtable$new function of microeco package, such as auto_tidy parameter.
 #' @return microtable object.
 #' @examples
@@ -58,7 +22,44 @@ phyloseq2meco <- function(physeq, ...){
 	phylo_tree_trans <- physeq@phy_tree
 	seq_trans <- physeq@refseq
 
-	dataset <- microtable$new(sample_table = sample_table_trans, otu_table = otu_table_trans, 
+	meco <- microtable$new(sample_table = sample_table_trans, otu_table = otu_table_trans, 
 		tax_table = tax_table_trans, phylo_tree = phylo_tree_trans, rep_fasta = seq_trans, ...)
-	dataset
+	meco
 }
+
+
+#' Transform 'microtable' object of 'microeco' package to the 'phyloseq' object of 'phyloseq' package <doi:10.1371/journal.pone.0061217>.
+#'
+#' @param meco a microtable object.
+#' @return phyloseq object.
+#' @examples
+#' \dontrun{
+#' library(microeco)
+#' data("dataset")
+#' meco2phyloseq(dataset)
+#' }
+#' @export
+meco2phyloseq <- function(meco){
+	otu_table_trans <- meco$otu_table
+	sample_table_trans <- meco$sample_table
+	tax_table_trans <- meco$tax_table
+	phylo_tree_trans <- meco$phylo_tree
+	seq_trans <- meco$rep_fasta
+	if(!is.null(seq_trans)){
+		if(!inherits(seq_trans, "DNAStringSet")){
+			message("Skip rep_fasta conversion as it is not DNAStringSet class!")
+			seq_trans <- NULL
+		}
+	}
+	# OTU table for phyloseq
+	otu_table_trans <- phyloseq::otu_table(otu_table_trans, taxa_are_rows = TRUE)
+	sampledata <- phyloseq::sample_data(sample_table_trans)
+	rownames(sampledata) <- rownames(sample_table_trans)
+	# Taxonomic table for phyloseq
+	if(!is.null(tax_table_trans)){
+		tax_table_trans <- phyloseq::tax_table(as.matrix(tax_table_trans))
+	}
+	physeq <- phyloseq::phyloseq(otu_table_trans, tax_table_trans, sampledata, phylo_tree_trans, seq_trans)
+	physeq
+}
+

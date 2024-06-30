@@ -2,18 +2,18 @@
 % Please edit documentation in R/physeq2meco.R
 \name{meco2phyloseq}
 \alias{meco2phyloseq}
-\title{Transform 'microtable' object of 'microeco' package to the 'phyloseq' object of 'phyloseq' package.}
+\title{Transform 'microtable' object of 'microeco' package to the 'phyloseq' object of 'phyloseq' package <doi:10.1371/journal.pone.0061217>.}
 \usage{
-meco2phyloseq(dataset)
+meco2phyloseq(meco)
 }
 \arguments{
-\item{dataset}{a microtable object.}
+\item{meco}{a microtable object.}
 }
 \value{
 phyloseq object.
 }
 \description{
-Transform 'microtable' object of 'microeco' package to the 'phyloseq' object of 'phyloseq' package.
+Transform 'microtable' object of 'microeco' package to the 'phyloseq' object of 'phyloseq' package <doi:10.1371/journal.pone.0061217>.
 }
 \examples{
 \dontrun{
